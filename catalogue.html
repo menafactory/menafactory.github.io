@@ -304,6 +304,8 @@
     tbody tr:hover td { background: #f3f5ff; }
     a { color: var(--primary); font-weight: 700; text-decoration: none; }
     a:hover { text-decoration: underline; }
+    .company-link { color: var(--primary-strong); text-decoration: none; }
+    .company-link:hover { text-decoration: underline; }
     .muted { color: var(--muted); font-size: 14px; }
     .empty { padding: 28px; text-align: center; color: var(--muted); font-weight: 600; }
     @media (max-width: 720px) {
@@ -755,6 +757,15 @@
     const resetScopeBtn = document.getElementById("resetScope");
     const langSelect = document.getElementById("langSelect");
 
+    function slugify(str) {
+      return (str || "")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-+|-+$/g, "");
+    }
+
     function t(key, vars = {}) {
       const str = (translations[state.lang] && translations[state.lang][key]) || translations.en[key] || key;
       return str.replace(/{{\s*(\w+)\s*}}/g, (_, k) => vars[k] ?? "");
@@ -1029,8 +1040,13 @@
 
       state.filtered.forEach(row => {
         const tr = document.createElement("tr");
+        const company = safe(row["Company Name"]);
+        const detailUrl = getCompanyLink(row);
+        const companyCell = detailUrl
+          ? `<a class="company-link" data-slug="${slugify(company)}" href="${detailUrl}">${company}</a>`
+          : `<span class="company-name">${company}</span>`;
         tr.innerHTML = `
-          <td><strong>${safe(row["Company Name"])}</strong></td>
+          <td><strong>${companyCell}</strong></td>
           <td>${safe(row.Country)}</td>
           <td>${safe(row["City/Location"])}</td>
           <td>${linkify(row.Website)}</td>
@@ -1040,6 +1056,7 @@
         tbodyEl.appendChild(tr);
       });
       statusEl.textContent = t("statusShowing", { count: state.filtered.length, s: state.filtered.length === 1 ? "" : "s" });
+      attachCompanyLinkHandlers();
     }
 
     function updateStats() {
@@ -1072,6 +1089,32 @@
       if (!url) return "";
       const normalized = url.startsWith("http") ? url : `https://${url}`;
       return `<a href="${normalized}" target="_blank" rel="noopener noreferrer">Visit →</a>`;
+    }
+
+    function getCompanyLink(row) {
+      const slug = slugify(row["Company Name"]);
+      if (!slug) return "";
+      return `company.html?id=${encodeURIComponent(slug)}`;
+    }
+
+    function attachCompanyLinkHandlers() {
+      document.querySelectorAll(".company-link").forEach(link => {
+        link.addEventListener("click", () => {
+          const slug = link.dataset.slug;
+          const row = state.filtered.find(r => slugify(r["Company Name"]) === slug);
+          if (row) {
+            sessionStorage.setItem("selectedCompany", JSON.stringify({
+              slug,
+              name: safe(row["Company Name"]),
+              country: safe(row.Country),
+              city: safe(row["City/Location"]),
+              website: safe(row.Website),
+              products: safe(row["Types of Products"]),
+              additional: safe(row["Additional Information"])
+            }));
+          }
+        });
+      });
     }
 
     applyTranslations();
