@@ -20,6 +20,7 @@
       --glow: 0 25px 80px rgba(45, 99, 97, 0.18);
     }
     * { box-sizing: border-box; }
+    html, body { height: 100%; }
     body {
       margin: 0;
       font-family: 'Space Grotesk', 'Noto Sans', system-ui, sans-serif;
@@ -27,8 +28,10 @@
       color: var(--ink);
       padding: 32px;
       min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .page { max-width: 1200px; margin: 0 auto 48px; }
+    .page { max-width: 1200px; margin: 0 auto 48px; flex:1; width:100%; }
     .top-nav { display:flex; justify-content: space-between; align-items:center; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
     .top-nav a { color: var(--primary); font-weight: 700; text-decoration: none; }
     .top-nav a:hover { text-decoration: underline; }
@@ -148,6 +151,43 @@
     .chat-log { max-height: 160px; overflow: auto; display: grid; gap: 6px; margin-top: 8px; }
     .chat-msg { background: #eef5f4; padding: 8px 10px; border-radius: 10px; }
     .pill { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; border-radius: 12px; background: rgba(45,99,97,0.12); font-weight: 700; color: var(--primary-strong); }
+    .lineup {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+    .lineup h3 { margin: 0 0 8px; }
+    .lineup-controls {
+      display: grid;
+      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin: 10px 0;
+    }
+    .lineup-controls label {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-weight: 700;
+      color: #0f172a;
+      font-size: 13px;
+    }
+    .lineup-controls input, .lineup-controls select {
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--line);
+      background: #f5f8f7;
+      font-size: 14px;
+      outline: none;
+    }
+    .lineup-controls input:focus, .lineup-controls select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(45,99,97,0.14); }
+    .lineup-table-wrap { overflow: auto; }
+    .lineup table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    .lineup th, .lineup td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--line); }
+    .lineup th { background: #eef5f4; color: #0f172a; position: sticky; top: 0; z-index: 1; }
+    .lineup tbody tr:hover td { background: #f6f9f9; }
+    .lineup .muted { color: var(--muted); font-weight: 600; }
     @media (max-width: 900px) {
       body { padding: 18px; }
       .grid { grid-template-columns: 1fr; }
@@ -246,6 +286,28 @@
         location: "Dubai, UAE",
         description: "Specialized in cold-forged, corrosion-resistant hooks for marine and construction supply chains across the Gulf.",
         tags: ["Metal fabrication", "ISO 9001", "Marine-grade steel"],
+        lineup: [
+          { name: "M6 Snap Hook", material: "Carbon steel", finish: "Galvanized", load: "80 kg", moq: "2,000 pcs", lead: "5 days", notes: "Basic utility" },
+          { name: "M8 Safety Hook", material: "Carbon steel", finish: "Hot-dip galvanized", load: "120 kg", moq: "1,000 pcs", lead: "5–7 days", notes: "Latch included" },
+          { name: "M10 Swivel Hook", material: "Carbon steel", finish: "Zinc-nickel", load: "180 kg", moq: "1,000 pcs", lead: "6 days", notes: "360° swivel" },
+          { name: "M12 Anchor Hook", material: "Carbon steel", finish: "Zinc-nickel", load: "450 kg", moq: "500 pcs", lead: "7–10 days", notes: "Heavy-duty" },
+          { name: "M14 Rebar Coupler Hook", material: "Alloy steel", finish: "Heat-treated", load: "520 kg", moq: "500 pcs", lead: "8 days", notes: "Site rigging" },
+          { name: "M16 Crane Eye Hook", material: "Alloy steel", finish: "Painted", load: "750 kg", moq: "300 pcs", lead: "10 days", notes: "Crane lifting" },
+          { name: "Forged Clevis Hook", material: "Alloy steel", finish: "Galvanized", load: "600 kg", moq: "1,000 pcs", lead: "7 days", notes: "Pin secured" },
+          { name: "Turnbuckle Hook", material: "Carbon steel", finish: "Galvanized", load: "200 kg", moq: "2,000 pcs", lead: "5 days", notes: "Assembly" },
+          { name: "Stainless 304 Hook", material: "Stainless 304", finish: "Bright", load: "150 kg", moq: "800 pcs", lead: "6 days", notes: "Food-grade" },
+          { name: "Stainless 316 Hook", material: "Stainless 316", finish: "Polished", load: "150 kg", moq: "800 pcs", lead: "6 days", notes: "Marine" },
+          { name: "Powder-coated Hook", material: "Carbon steel", finish: "Powder coat", load: "120 kg", moq: "1,500 pcs", lead: "7 days", notes: "Color-coded" },
+          { name: "Plastic-coated Hook", material: "Carbon steel", finish: "PVC dip", load: "100 kg", moq: "1,500 pcs", lead: "7 days", notes: "Anti-scratch" },
+          { name: "Heat-treated Alloy Hook", material: "Alloy steel", finish: "Heat-treated", load: "500 kg", moq: "500 pcs", lead: "8 days", notes: "High tensile" },
+          { name: "Rigging Hook HT", material: "Alloy steel", finish: "Zinc-nickel", load: "650 kg", moq: "400 pcs", lead: "9 days", notes: "Rigging" },
+          { name: "Safety Latch Kit", material: "Carbon steel", finish: "Zinc", load: "Accessory", moq: "1,000 pcs", lead: "5 days", notes: "Replacement" },
+          { name: "Quick-link Oval Hook", material: "Carbon steel", finish: "Galvanized", load: "110 kg", moq: "2,000 pcs", lead: "5 days", notes: "Utility link" },
+          { name: "Locking Carabiner", material: "Alloy steel", finish: "Anodized", load: "160 kg", moq: "1,000 pcs", lead: "6 days", notes: "Twist lock" },
+          { name: "Wire-rope Thimble Hook", material: "Carbon steel", finish: "Galvanized", load: "140 kg", moq: "1,500 pcs", lead: "6 days", notes: "Cable ready" },
+          { name: "Thick Gauge Hook", material: "Alloy steel", finish: "Heat-treated", load: "900 kg", moq: "300 pcs", lead: "10 days", notes: "Heavy load" },
+          { name: "Custom OEM Hook", material: "Per drawing", finish: "Per spec", load: "Per spec", moq: "As agreed", lead: "Quoted", notes: "OEM program" }
+        ],
         products: [
           {
             name: "Galvanized M8 Safety Hook",
@@ -376,6 +438,7 @@
     const companyDescEl = document.getElementById("companyDesc");
     const taglineEl = document.getElementById("tagline");
     const productsEl = document.getElementById("products");
+    const productsPanelEl = document.getElementById("productsPanel");
     const orderProductEl = document.getElementById("orderProduct");
     const orderForm = document.getElementById("orderForm");
     const cartEl = document.getElementById("cart");
@@ -404,6 +467,99 @@
         </div>
       </div>
     `).join("");
+
+    if (company.lineup && company.lineup.length) {
+      const lineup = document.createElement("div");
+      lineup.className = "lineup";
+      lineup.innerHTML = `
+        <h3>Full production lineup (${company.lineup.length} SKUs)</h3>
+        <div class="lineup-controls">
+          <label>Search
+            <input type="text" id="lineupSearch" placeholder="Search name or notes">
+          </label>
+          <label>Material
+            <select id="lineupMaterial"></select>
+          </label>
+          <label>Finish
+            <select id="lineupFinish"></select>
+          </label>
+        </div>
+        <div class="lineup-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Material</th>
+                <th>Finish</th>
+                <th>Load rating</th>
+                <th>MOQ</th>
+                <th>Lead time</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody id="lineupBody"></tbody>
+          </table>
+        </div>
+      `;
+      productsPanelEl.appendChild(lineup);
+
+      const lineupBody = lineup.querySelector("#lineupBody");
+      const searchEl = lineup.querySelector("#lineupSearch");
+      const materialEl = lineup.querySelector("#lineupMaterial");
+      const finishEl = lineup.querySelector("#lineupFinish");
+
+      function rebuildOptions(selectEl, items) {
+        const current = selectEl.value;
+        selectEl.innerHTML = "";
+        const base = document.createElement("option");
+        base.value = "";
+        base.textContent = "All";
+        selectEl.appendChild(base);
+        Array.from(items).filter(Boolean).sort().forEach(val => {
+          const opt = document.createElement("option");
+          opt.value = val;
+          opt.textContent = val;
+          selectEl.appendChild(opt);
+        });
+        if (Array.from(items).includes(current)) selectEl.value = current;
+      }
+
+      function renderLineup() {
+        const query = searchEl.value.trim().toLowerCase();
+        const mat = materialEl.value;
+        const fin = finishEl.value;
+        const filtered = company.lineup.filter(item => {
+          if (mat && item.material !== mat) return false;
+          if (fin && item.finish !== fin) return false;
+          if (query) {
+            const hay = [item.name, item.notes, item.finish, item.material].join(" ").toLowerCase();
+            if (!hay.includes(query)) return false;
+          }
+          return true;
+        });
+        lineupBody.innerHTML = filtered.map(item => `
+          <tr>
+            <td><strong>${item.name}</strong></td>
+            <td>${item.material}</td>
+            <td>${item.finish}</td>
+            <td>${item.load}</td>
+            <td>${item.moq}</td>
+            <td>${item.lead}</td>
+            <td class="muted">${item.notes}</td>
+          </tr>
+        `).join("") || `<tr><td colspan="7" class="muted">No items match these filters.</td></tr>`;
+      }
+
+      const materials = new Set(company.lineup.map(i => i.material));
+      const finishes = new Set(company.lineup.map(i => i.finish));
+      rebuildOptions(materialEl, materials);
+      rebuildOptions(finishEl, finishes);
+      renderLineup();
+
+      searchEl.addEventListener("input", renderLineup);
+      materialEl.addEventListener("change", renderLineup);
+      finishEl.addEventListener("change", renderLineup);
+    }
 
     orderProductEl.innerHTML = company.products.map(p => `<option value="${p.name}">${p.name}</option>`).join("");
 
@@ -465,6 +621,109 @@
     }
 
     renderCart();
+  </script>
+
+  <!-- Global Footer -->
+  <footer class="mf-footer">
+    <div class="mf-footer-shell">
+      <div class="mf-footer-grid">
+        <nav aria-labelledby="footer-about">
+          <h4 id="footer-about">About</h4>
+          <ul>
+            <li><a href="about.html">What is MENAFactory?</a></li>
+            <li><a href="vision.html">Industrial Ecosystem Vision</a></li>
+            <li><a href="partners.html">Partners & Alliances</a></li>
+            <li><a href="careers.html">Careers</a></li>
+            <li><a href="press.html">Press & Media</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-labelledby="footer-legal">
+          <h4 id="footer-legal">About the Website</h4>
+          <ul>
+            <li><a href="copyright.html">Copyright</a></li>
+            <li><a href="disclaimer.html">Disclaimer</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="terms.html">Terms & Conditions</a></li>
+            <li><a href="cookies.html">Cookies & Data Usage</a></li>
+            <li><a href="security.html">Security & Compliance Statement</a></li>
+          </ul>
+        </nav>
+
+        <nav aria-labelledby="footer-quick">
+          <h4 id="footer-quick">Quick Links</h4>
+          <ul>
+            <li><a href="contact.html">Contact Us</a></li>
+            <li><a href="faqs.html">FAQs</a></li>
+            <li><a href="support.html">Support Center</a></li>
+            <li><a href="investor-learning.html">Investor Learning Center</a></li>
+            <li><a href="founders-learning-center.html">Founder Learning Center</a></li>
+            <li><a href="sitemap.html">Sitemap</a></li>
+            <li><a href="accessibility.html">Accessibility Statement</a></li>
+          </ul>
+        </nav>
+
+        <div aria-labelledby="footer-support">
+          <div class="mf-brand">
+            <div class="mf-logo" aria-hidden="true">MF</div>
+            <div class="mf-brand-text">
+              <strong>MENAFactory</strong>
+              <span>Industrial capital & marketplace</span>
+            </div>
+          </div>
+          <h4 id="footer-support">Support & Contact</h4>
+          <ul class="mf-support">
+            <li><span class="mf-icon">📞</span><a href="tel:+9710000000">+971-XXX-XXXX</a></li>
+            <li><span class="mf-icon">💬</span><a href="https://wa.me/9710000000">WhatsApp: +971-XXX-XXXX</a></li>
+            <li><span class="mf-icon">✉️</span><a href="mailto:support@menafactory.com">Email us</a></li>
+            <li><span class="mf-icon">🤝</span><a href="/contact">Talk to an advisor</a></li>
+          </ul>
+          <div class="muted">Support available 7 days a week</div>
+        </div>
+      </div>
+
+      <div class="mf-footer-bottom">
+        <div class="mf-legal">© 2025 MENAFactory. All rights reserved. Last updated on: <span class="mf-date"></span>.</div>
+        <div class="mf-social">
+          <span>Follow us on</span>
+          <a href="https://facebook.com" aria-label="Facebook">Fb</a>
+          <a href="https://instagram.com" aria-label="Instagram">Ig</a>
+          <a href="https://linkedin.com" aria-label="LinkedIn">Li</a>
+          <a href="https://twitter.com" aria-label="X (Twitter)">X</a>
+          <a href="https://youtube.com" aria-label="YouTube">Yt</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <style>
+    .mf-footer { background:#f6f8f7; border-top:1px solid rgba(45,99,97,0.16); margin-top:24px; }
+    .mf-footer-shell { max-width:1200px; margin:0 auto; padding:20px 18px 26px; }
+    .mf-footer-grid { display:grid; gap:16px; grid-template-columns:repeat(4,minmax(0,1fr)); }
+    .mf-footer h4 { margin:0 0 8px; font-size:15px; letter-spacing:-0.1px; color:#0d1b1a; }
+    .mf-footer ul { list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+    .mf-footer a { color:#2d6361; font-weight:600; text-decoration:none; font-size:14px; }
+    .mf-footer a:hover { text-decoration:underline; color:#1f4745; }
+    .mf-footer .muted { color:#4f6664; font-size:13px; }
+    .mf-brand { display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+    .mf-logo { width:34px; height:34px; border-radius:10px; background:linear-gradient(135deg,#1f4745,#2d6361); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; }
+    .mf-brand-text { display:flex; flex-direction:column; gap:2px; font-size:13px; }
+    .mf-support { list-style:none; padding:0; margin:6px 0 8px; display:grid; gap:6px; }
+    .mf-icon { width:18px; display:inline-block; }
+    .mf-footer-bottom { border-top:1px solid rgba(45,99,97,0.16); margin-top:18px; padding-top:12px; display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center; }
+    .mf-social { display:flex; gap:10px; align-items:center; font-size:14px; color:#2d6361; }
+    .mf-social a { font-weight:700; }
+    @media (max-width:900px) { .mf-footer-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+    @media (max-width:640px) { .mf-footer-grid { grid-template-columns:1fr; } .mf-footer-shell { padding:18px 16px 22px; } .mf-footer-bottom { flex-direction:column; align-items:flex-start; } }
+  </style>
+  <script>
+    (function(){
+      const el = document.querySelector(".mf-date");
+      if (el) {
+        const now = new Date();
+        el.textContent = now.toLocaleString();
+      }
+    })();
   </script>
 </body>
 </html>
